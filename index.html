@@ -1,0 +1,152 @@
+!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hábitos Cotidianos e Saúde Mental: O Que Revela a Pesquisa</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --azul:#6ea8e0; --menta:#7fd6b8; --lavanda:#b4a6ee; --tinta:#1f2a44; --suave:#5a6785; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Poppins', system-ui, sans-serif; background:#f7f9fc; color:var(--tinta); }
+  .fade { opacity:0; transform:translateY(18px); transition:opacity .9s ease, transform .9s cubic-bezier(.22,.61,.36,1); }
+  .fade.on { opacity:1; transform:none; }
+  .fill { width:0; transition:width 1.3s cubic-bezier(.22,.61,.36,1); }
+  .card { background:#fff; border-radius:1.25rem; padding:1.5rem; box-shadow:0 6px 24px rgba(110,168,224,.14); }
+  .note { border-radius:.9rem; padding:1rem 1.1rem; font-size:.875rem; line-height:1.65; color:var(--suave); }
+  a:focus-visible, button:focus-visible { outline:3px solid var(--lavanda); outline-offset:3px; }
+  @media (prefers-reduced-motion: reduce) {
+    .fade, .fill { transition:none; opacity:1; transform:none; }
+    html { scroll-behavior:auto; }
+  }
+ 
+  /* ===== Decoração e animações ===== */
+  body { background: linear-gradient(#f7f9fc, #edf3fb 55%, #f7f9fc); }
+  .card { background: linear-gradient(160deg, #fff 55%, #f1f6fd); }
+  .fade { filter: blur(6px); transition: opacity .9s ease, transform .9s cubic-bezier(.22,.61,.36,1), filter .9s ease; }
+  .fade.on { filter: none; }
+  .fade.card { transition: opacity .9s ease, transform .9s cubic-bezier(.22,.61,.36,1), filter .9s ease, box-shadow .4s ease; }
+  .fade.on.card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(110,168,224,.28); }
+  .card { position: relative; overflow: hidden; }
+  .card::after { content: ""; position: absolute; right: -44px; top: -44px; width: 130px; height: 130px; border-radius: 50%; background: radial-gradient(circle, rgba(180,166,238,.3), transparent 70%); transition: transform .7s ease; pointer-events: none; }
+  .card:hover::after { transform: scale(1.7); }
+  .blob { animation: drift 16s ease-in-out infinite alternate; }
+  @keyframes drift { to { transform: translate(60px,-40px) scale(1.15); } }
+  .orbe { animation: respira 9s ease-in-out infinite; }
+  @keyframes respira { 50% { transform: scale(1.14); } }
+  .pontos { background-image: radial-gradient(rgba(31,42,68,.12) 1px, transparent 1px); background-size: 22px 22px; -webkit-mask-image: linear-gradient(#000, transparent 85%); mask-image: linear-gradient(#000, transparent 85%); }
+  [data-painel][hidden] { display: none !important; }
+  .painel-in { animation: entra .7s cubic-bezier(.22,.61,.36,1); }
+  @keyframes entra { from { opacity: 0; transform: translateY(14px); } }
+  #marca { transition: transform .55s cubic-bezier(.22,.61,.36,1), width .55s cubic-bezier(.22,.61,.36,1); }
+  @property --r { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+  .pizza { --r: 0%; border-radius: 9999px; -webkit-mask: conic-gradient(#000 var(--r), transparent 0); mask: conic-gradient(#000 var(--r), transparent 0); transition: --r 1.6s cubic-bezier(.22,.61,.36,1) .3s, transform .5s ease; }
+  .on .pizza { --r: 100%; }
+  .pizza:hover { transform: rotate(10deg) scale(1.05); }
+  .leg { opacity: 0; transform: translateX(12px); transition: opacity .6s ease, transform .6s ease; transition-delay: calc(.5s + var(--i) * .12s); }
+  .on .leg { opacity: 1; transform: none; }
+  @property --p { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+  .progresso { --p: 0%; --c: #7fd6b8; border-radius: 9999px; background: conic-gradient(var(--c) var(--p), rgba(31,42,68,.08) 0); transition: --p .9s cubic-bezier(.22,.61,.36,1); }
+  .linha { transform: scaleY(0); transform-origin: top; transition: transform 1.8s cubic-bezier(.22,.61,.36,1); }
+  .linha.on { transform: scaleY(1); }
+  .chip { transition: background-color .3s, color .3s, transform .3s; }
+  .chip:hover { transform: translateY(-2px); }
+  .chip.ativo { background: var(--tinta); color: #fff; border-color: var(--tinta); }
+  #resumo th, #resumo td { padding: .75rem .5rem; }
+  #resumo tbody tr { border-top: 1px solid rgba(31,42,68,.08); }
+  #resumo tbody tr:hover { background: rgba(110,168,224,.1); }
+  .faq summary { cursor: pointer; list-style: none; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq .chev { transition: transform .4s ease; }
+  .faq[open] .chev { transform: rotate(180deg); }
+  .faq[open] p { animation: entra .5s cubic-bezier(.22,.61,.36,1); }
+  @media (prefers-reduced-motion: reduce) {
+    .blob, .orbe, .painel-in { animation: none; }
+    .linha { transform: none; transition: none; }
+    .progresso { transition: none; }
+    .pizza { --r: 100%; transition: none; }
+    .leg { opacity: 1; transform: none; transition: none; }
+    .fade { filter: none; }
+    #marca { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div id="barra" class="fixed top-0 left-0 z-30 h-[3px] w-full bg-gradient-to-r from-[#7fd6b8] via-[#6ea8e0] to-[#b4a6ee]" style="transform:scaleX(0);transform-origin:left"></div>
+ 
+<!-- Navegação -->
+<header class="sticky top-0 z-20 bg-white/70 backdrop-blur border-b border-slate-200/70">
+  <nav class="max-w-6xl mx-auto px-5 py-3 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+    <button data-aba="inicio" class="flex items-center gap-2 font-semibold text-left"><span class="h-4 w-4 rounded-full bg-gradient-to-br from-[#7fd6b8] to-[#6ea8e0]"></span>Mente e Rotina</button>
+    <div id="abas" role="tablist" class="relative flex gap-1 overflow-x-auto text-sm">
+      <span id="marca" class="absolute left-0 top-0 h-full w-0 rounded-full bg-[var(--tinta)]"></span>
+      <button role="tab" data-aba="inicio" class="relative z-10 whitespace-nowrap rounded-full px-4 py-2 text-[var(--suave)] transition-colors">Início</button>
+      <button role="tab" data-aba="estatisticas" class="relative z-10 whitespace-nowrap rounded-full px-4 py-2 text-[var(--suave)] transition-colors">Estatísticas</button>
+      <button role="tab" data-aba="ambiente" class="relative z-10 whitespace-nowrap rounded-full px-4 py-2 text-[var(--suave)] transition-colors">Ao nosso redor</button>
+    </div>
+  </nav>
+</header>
+ 
+<main>
+ 
+<div data-painel="inicio">
+<!-- Hero -->
+<section class="relative overflow-hidden bg-gradient-to-b from-[#e1eefc] to-[#ece8fb]">
+  <div data-par=".18" class="blob absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[var(--azul)] opacity-20 blur-3xl"></div>
+  <div data-par=".3" class="blob absolute top-10 -right-24 w-96 h-96 rounded-full bg-[var(--lavanda)] opacity-25 blur-3xl"></div>
+  <div data-par=".12" class="blob absolute bottom-0 left-1/3 w-72 h-72 rounded-full bg-[var(--menta)] opacity-20 blur-3xl" style="animation-delay:-8s"></div>
+  <div class="pontos absolute inset-0"></div>
+  <div class="orbe absolute right-[6%] top-24 hidden md:block w-80 h-80 rounded-full bg-gradient-to-br from-[#7fd6b8] via-[#6ea8e0] to-[#b4a6ee] opacity-40 blur-sm"></div>
+  <div class="orbe absolute right-[3%] top-14 hidden md:block w-[26rem] h-[26rem] rounded-full border border-[#6ea8e0]/30" style="animation-delay:-3s"></div>
+  <div class="relative max-w-4xl mx-auto px-5 pt-20 pb-16 md:pt-28 md:pb-24">
+    <h1 class="fade text-4xl md:text-6xl font-bold leading-tight">Hábitos Cotidianos e Saúde Mental: O Que Revela a Pesquisa</h1>
+    <p class="fade mt-6 text-lg md:text-xl text-[var(--suave)] max-w-2xl leading-relaxed" style="transition-delay:.15s">
+      Uma análise com 43 participantes sobre sono, uso do celular, redes sociais e estudos, e como esses hábitos podem se relacionar com o bem-estar emocional.
+    </p>
+    <div class="fade mt-10 flex flex-wrap gap-3" style="transition-delay:.3s">
+      <a href="#estatisticas" data-aba="estatisticas" class="px-6 py-3 rounded-full bg-[var(--tinta)] text-white font-medium hover:opacity-90 transition">Ver os resultados</a>
+      <a href="#ambiente" data-aba="ambiente" class="px-6 py-3 rounded-full bg-white text-[var(--tinta)] font-medium border border-slate-200 hover:border-[var(--azul)] transition">O ambiente ao nosso redor</a>
+    </div>
+  </div>
+</section>
+ 
+<!-- Introdução -->
+<section class="bg-gradient-to-b from-[#ece8fb] to-[#e4f6ee]">
+  <div class="max-w-4xl mx-auto px-5 pt-6 pb-16">
+  <div class="fade card grid md:grid-cols-5 gap-6 items-start">
+    <div class="md:col-span-3">
+      <h2 class="text-2xl font-semibold mb-3">Introdução</h2>
+      <p class="text-[var(--suave)] leading-relaxed">
+        A saúde mental está relacionada a diversos fatores do cotidiano, como a qualidade do sono, o uso de redes sociais e os hábitos durante as refeições. Esses comportamentos podem influenciar o humor, a concentração, a disposição e o bem-estar emocional.
+      </p>
+      <p class="text-[var(--suave)] leading-relaxed mt-3">
+        Para compreender essa relação, foram analisadas as respostas de 43 participantes a oito perguntas sobre hábitos diários.
+      </p>
+    </div>
+    <div class="md:col-span-2 note bg-[#eef0fd]">
+      Os resultados mostram tendências de comportamento que podem estar relacionadas à saúde mental, mas não bastam, isoladamente, para estabelecer diagnósticos ou provar causa e efeito.
+    </div>
+  </div>
+ 
+  </div>
+</section>
+ 
+ 
+<section class="bg-gradient-to-b from-[#e4f6ee] to-[#e1eefc]">
+  <div class="max-w-6xl mx-auto px-5 py-20">
+      <div class="fade max-w-2xl mb-10">
+        <h2 class="text-3xl md:text-4xl font-bold">Como a pesquisa foi feita</h2>
+        <p class="mt-3 text-[var(--suave)] leading-relaxed">Entenda de onde vêm os números e como interpretá-los com cuidado.</p>
+      </div>
+      <div class="grid grid-cols-3 gap-4 mb-8">
+        <div class="fade card" style="background:#e4f0fc"><p class="conta text-4xl font-bold" style="color:#2f6fb3">43</p><p class="mt-1 text-sm text-[var(--suave)]">participantes</p></div><div class="fade card" style="background:#e3f7ef"><p class="conta text-4xl font-bold" style="color:#2a8f6c">8</p><p class="mt-1 text-sm text-[var(--suave)]">perguntas sobre hábitos</p></div><div class="fade card" style="background:#eeeafc"><p class="conta text-4xl font-bold" style="color:#6a58c9">5</p><p class="mt-1 text-sm text-[var(--suave)]">temas: sono, celular, redes, estudos e refeições</p></div>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="fade card" style="transition-delay:0s"><span class="grid h-9 w-9 place-items-center rounded-full bg-[var(--tinta)] text-sm font-semibold text-white">1</span><h3 class="mt-4 text-lg font-semibold">Coleta</h3><p class="mt-2 text-sm leading-relaxed text-[var(--suave)]">43 participantes responderam a oito perguntas sobre os seus hábitos diários.</p></div>
+        <div class="fade card" style="transition-delay:0.12s"><span class="grid h-9 w-9 place-items-center rounded-full bg-[var(--tinta)] text-sm font-semibold text-white">2</span><h3 class="mt-4 text-lg font-semibold">Organização</h3><p class="mt-2 text-sm leading-relaxed text-[var(--suave)]">As respostas foram reunidas em porcentagens e separadas por pergunta.</p></div>
+        <div class="fade card" style="transition-delay:0.24s"><span class="grid h-9 w-9 place-items-center rounded-full bg-[var(--tinta)] text-sm font-semibold text-white">3</span><h3 class="mt-4 text-lg font-semibold">Interpretação</h3><p class="mt-2 text-sm leading-relaxed text-[var(--suave)]">Cada resultado foi relacionado ao que se sabe sobre sono, telas e bem-estar emocional, sem fazer diagnósticos.</p></div>
+      </div>
+  </div>
+</section>
